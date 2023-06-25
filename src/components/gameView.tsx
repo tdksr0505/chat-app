@@ -1,11 +1,22 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { ChatData } from '../types'
+import { SocketContext } from '../context/socketContext'
+import { PlayerListContext } from '../context/playerListContext'
+import { S2C_COMMAND } from '@/constants'
+
 type gameViewProps = {}
 
 const gameView: React.FC<gameViewProps> = () => {
   const [chatData, setChatData] = useState<ChatData[]>([])
-  const [playerList, setPlayerList] = useState<string[]>([])
+  const socket = useContext(SocketContext)
+  const { playerList, setPlayerList } = useContext(PlayerListContext)
+
+  useEffect(() => {
+    socket.on(S2C_COMMAND.PLAYER_LIST, (arg: string[]) => {
+      setPlayerList(arg)
+    })
+  }, [])
   return (
     <div className="w-screen h-screen flex justify-center items-center flex-col p-2">
       <div className="p-8 bg-white text-center rounded shadow-lg h-4/5 w-[900px] max-w-full flex flex-col">

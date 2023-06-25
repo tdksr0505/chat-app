@@ -1,6 +1,6 @@
 'use client'
 import React, { createContext, useRef } from 'react'
-import { Socket, io } from 'socket.io-client'
+import { io } from 'socket.io-client'
 
 const socket = io('ws://localhost:3005')
 
