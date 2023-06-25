@@ -13,6 +13,10 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
     setName(event.target.value)
   }
   const handleStart = () => {
+    if (!name) {
+      alert('暱稱不可為空白')
+      return
+    }
     socket.emit(C2S_COMMAND.USER_JOIN, name)
   }
 
