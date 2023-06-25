@@ -23,10 +23,12 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
   }
 
   useEffect(() => {
-    socket.on(S2C_COMMAND.USER_JOIN, (arg: LoginInfo) => {
+    socket.on(S2C_COMMAND.LOGIN, (arg: LoginInfo) => {
       if (arg.isLogin) {
         setIsLogin(true)
-        setPlayerList(arg.playerList)
+        arg.playerList && setPlayerList(arg.playerList)
+      } else {
+        alert(arg.msg)
       }
     })
   }, [])

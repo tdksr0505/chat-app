@@ -3,7 +3,7 @@ export const C2S_COMMAND = {
 }
 
 export const S2C_COMMAND = {
-  USER_JOIN: 'USER_JOIN',
+  LOGIN: 'LOGIN',
   OTHER_JOIN: 'OTHER_JOIN',
   PLAYER_LIST: 'PLAYER_LIST',
 }

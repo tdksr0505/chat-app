@@ -1,6 +1,7 @@
 export type LoginInfo = {
   isLogin: boolean
-  playerList: string[]
+  playerList?: string[]
+  msg?: string
 }
 
 export type ChatData = {
