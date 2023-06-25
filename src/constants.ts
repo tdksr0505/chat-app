@@ -1,9 +1,11 @@
 export const C2S_COMMAND = {
   USER_JOIN: 'USER_JOIN',
+  SEND_MSG: 'SEND_MSG',
 }
 
 export const S2C_COMMAND = {
   LOGIN: 'LOGIN',
   OTHER_JOIN: 'OTHER_JOIN',
   PLAYER_LIST: 'PLAYER_LIST',
+  SEND_MSG: 'SEND_MSG',
 }

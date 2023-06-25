@@ -3,12 +3,13 @@ import React, { useEffect, useState, useContext } from 'react'
 import { ChatData } from '../types'
 import { SocketContext } from '../context/socketContext'
 import { PlayerListContext } from '../context/playerListContext'
-import { S2C_COMMAND } from '@/constants'
+import { C2S_COMMAND, S2C_COMMAND } from '@/constants'
 
 type gameViewProps = {}
 
 const gameView: React.FC<gameViewProps> = () => {
   const [chatData, setChatData] = useState<ChatData[]>([])
+  const [msg, setMsg] = useState<string>('')
   const socket = useContext(SocketContext)
   const { playerList, setPlayerList } = useContext(PlayerListContext)
 
@@ -16,7 +17,22 @@ const gameView: React.FC<gameViewProps> = () => {
     socket.on(S2C_COMMAND.PLAYER_LIST, (arg: string[]) => {
       setPlayerList(arg)
     })
+    socket.on(S2C_COMMAND.SEND_MSG, (arg: ChatData) => {
+      setChatData((pre) => [...pre, arg])
+    })
   }, [])
+  const handleSendMsg = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (!msg) {
+        return
+      }
+      socket.emit(C2S_COMMAND.SEND_MSG, msg)
+      setMsg('')
+    }
+  }
+  const handleMsgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMsg(e.target.value)
+  }
   return (
     <div className="w-screen h-screen flex justify-center items-center flex-col p-2">
       <div className="p-4  text-center rounded shadow-lg h-4/5 w-[900px] max-w-full flex flex-col bg-[#f4edff]">
@@ -45,9 +61,10 @@ const gameView: React.FC<gameViewProps> = () => {
         {/* 下半部 */}
         <div className="h-1/3 border-t-2 border-slate-500 pt-1  flex flex-col">
           <div className="  border-blue-500 flex-auto overflow-auto">
-            {chatData.map((data, idx) => {
+            {chatData.map((data) => {
+              let key = `${data.player}-${data.msg}`
               return (
-                <div className="flex" key={idx}>
+                <div className="flex " key={key}>
                   <div className="text-slate-500">{data.player}：</div>
                   <div className="text-slate-800">{data.msg}</div>
                 </div>
@@ -56,6 +73,9 @@ const gameView: React.FC<gameViewProps> = () => {
           </div>
           <input
             type="text"
+            onKeyDown={handleSendMsg}
+            onChange={handleMsgChange}
+            value={msg}
             placeholder="輸入答案或對話"
             className="rounded outline-0 p-2 shadow-md border-2 border-blue-500 w-full mt-1"
           />

@@ -20,6 +20,7 @@ io.on('connection', (socket) => {
     console.log('玩家列表', playerMap)
   })
 
+  // 玩家加入
   socket.on(C2S_COMMAND.USER_JOIN, (arg) => {
     console.log(`join`, socket.id, arg)
     if ([...playerMap.values()].includes(arg)) {
@@ -37,5 +38,12 @@ io.on('connection', (socket) => {
     })
     socket.broadcast.emit(S2C_COMMAND.PLAYER_LIST, playerList)
     console.log('玩家列表', playerMap)
+  })
+
+  // 玩家對話
+  socket.on(C2S_COMMAND.SEND_MSG, (arg) => {
+    let player = playerMap.get(socket.id)
+    socket.emit(S2C_COMMAND.SEND_MSG, { player, msg: arg })
+    socket.broadcast.emit(S2C_COMMAND.SEND_MSG, { player, msg: arg })
   })
 })
