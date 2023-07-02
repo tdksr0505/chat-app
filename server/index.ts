@@ -46,4 +46,9 @@ io.on('connection', (socket) => {
     socket.emit(S2C_COMMAND.SEND_MSG, { player, msg: arg })
     socket.broadcast.emit(S2C_COMMAND.SEND_MSG, { player, msg: arg })
   })
+
+  // DRAW
+  socket.on(C2S_COMMAND.DRAW, (arg) => {
+    socket.broadcast.emit(S2C_COMMAND.DRAW, arg)
+  })
 })

@@ -1,9 +1,9 @@
 'use client'
-import React, { useEffect, useState, useContext } from 'react'
-import { ChatData } from '../types'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { PlayerListContext } from '../context/playerListContext'
 import { C2S_COMMAND, S2C_COMMAND } from '@/constants'
+import Canvas from './canvas'
 
 type gameViewProps = {}
 
@@ -35,26 +35,29 @@ const gameView: React.FC<gameViewProps> = () => {
   }
   return (
     <div className="w-screen h-screen flex justify-center items-center flex-col p-2">
-      <div className="p-4  text-center rounded shadow-lg h-4/5 w-[900px] max-w-full flex flex-col bg-[#f4edff]">
+      <div className="p-4  text-center rounded shadow-lg h-[600px] w-[700px]  flex flex-col bg-white">
         {/* 上半部 */}
         <div className="h-2/3 flex flex-auto pb-1">
           {/* 畫布區 */}
           <div className="w-3/4 h-full pr-2 pb-2 ">
-            <div className="bg-white w-full h-full"></div>
+            <Canvas socket={socket} />
           </div>
           {/* 玩家列表 */}
-          <div className="flex-auto h-full border-l-2 border-slate-500 text-left pl-2 overflow-auto">
-            {playerList.map((player) => {
-              return (
-                <div
-                  key={player}
-                  className="text-slate-500 py-1 border-b border-slate-400 last:border-0 flex items-center"
-                >
-                  <img src="/img/player.png" className="w-[30px]" />
-                  <div>{player}</div>
-                </div>
-              )
-            })}
+          <div className="flex-auto h-full border-l-2 border-slate-500">
+            <div className="text-center text-slate-500 font-bold">PLAYERS</div>
+            <div className="text-left pl-2 overflow-auto">
+              {playerList.map((player) => {
+                return (
+                  <div
+                    key={player}
+                    className="text-slate-500 py-1 border-b border-slate-400 last:border-0 flex items-center"
+                  >
+                    <img src="/img/player.png" className="w-[30px]" />
+                    <div>{player}</div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
 
