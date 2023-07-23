@@ -11,7 +11,7 @@ import {
   S2C_DrawLine,
 } from './type'
 
-const WSS_PORT = 3005
+const WSS_PORT = 3016
 
 class WebsocketManager {
   private io: Server
