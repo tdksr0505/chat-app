@@ -2,8 +2,10 @@
 import React, { createContext, useState } from 'react'
 
 const defaultValue = {
-  playerList: [] as string[],
-  setPlayerList: (() => {}) as React.Dispatch<React.SetStateAction<string[]>>,
+  playerList: [] as PlayerData[],
+  setPlayerList: (() => {}) as React.Dispatch<
+    React.SetStateAction<PlayerData[]>
+  >,
 }
 export const PlayerListContext = createContext(defaultValue)
 export const PlayerListProvider = ({
@@ -11,7 +13,7 @@ export const PlayerListProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [playerList, setPlayerList] = useState<string[]>([])
+  const [playerList, setPlayerList] = useState<PlayerData[]>([])
   const providerValue = {
     playerList,
     setPlayerList,

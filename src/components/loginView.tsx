@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { PlayerListContext } from '../context/playerListContext'
 import { C2S_COMMAND, S2C_COMMAND } from '../constants'
-import { LoginInfo } from '../types'
+
 type loginViewProps = {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -21,7 +21,7 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
 
       return
     }
-    socket.emit(C2S_COMMAND.USER_JOIN, name)
+    socket.emit(C2S_COMMAND.USER_JOIN, { userName: name })
   }
 
   useEffect(() => {

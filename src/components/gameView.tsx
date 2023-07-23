@@ -13,23 +13,30 @@ const gameView: React.FC<gameViewProps> = () => {
   const socket = useContext(SocketContext)
   const { playerList, setPlayerList } = useContext(PlayerListContext)
 
+  const chatBoxRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    socket.on(S2C_COMMAND.PLAYER_LIST, (arg: string[]) => {
-      setPlayerList(arg)
+    socket.on(S2C_COMMAND.PLAYER_LIST, (data: PlayerList) => {
+      setPlayerList(data.playerList)
     })
-    socket.on(S2C_COMMAND.SEND_MSG, (arg: ChatData) => {
-      setChatData((pre) => [...pre, arg])
+    socket.on(S2C_COMMAND.SEND_MSG, (data: ChatData) => {
+      setChatData((pre) => [...pre, data])
     })
-    socket.on(S2C_COMMAND.NEW_ROUND, (arg: NewRoundData) => {
-      console.log(arg)
+    socket.on(S2C_COMMAND.NEW_ROUND, (data: NewRoundData) => {
+      console.log(data)
     })
   }, [])
+
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
+    }
+  }, [chatData])
   const handleSendMsg = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       if (!msg) {
         return
       }
-      socket.emit(C2S_COMMAND.SEND_MSG, msg)
+      socket.emit(C2S_COMMAND.SEND_MSG, { msg })
       setMsg('')
     }
   }
@@ -52,11 +59,11 @@ const gameView: React.FC<gameViewProps> = () => {
               {playerList.map((player) => {
                 return (
                   <div
-                    key={player}
+                    key={player.id}
                     className="text-slate-500 py-1 border-b border-slate-400 last:border-0 flex items-center"
                   >
                     <img src="/img/player.png" className="w-[30px]" />
-                    <div>{player}</div>
+                    <div>{player.userName}</div>
                   </div>
                 )
               })}
@@ -66,12 +73,15 @@ const gameView: React.FC<gameViewProps> = () => {
 
         {/* 下半部 */}
         <div className="h-1/3 border-t-2 border-slate-500 pt-1  flex flex-col">
-          <div className="  border-blue-500 flex-auto overflow-auto">
+          <div
+            className="  border-blue-500 flex-auto overflow-auto"
+            ref={chatBoxRef}
+          >
             {chatData.map((data) => {
-              let key = `${data.player}-${data.msg}`
+              let key = `${data.userName}-${data.msg}-${data.timeStamp}`
               return (
                 <div className="flex " key={key}>
-                  <div className="text-slate-500">{data.player}：</div>
+                  <div className="text-slate-500">{data.userName}：</div>
                   <div className="text-slate-800">{data.msg}</div>
                 </div>
               )
