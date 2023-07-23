@@ -1,11 +1,11 @@
 import WebsocketManager from './websocketManager'
-import { C2S_JoinData, UserData, C2S_DrawLine } from './type'
+import { C2S_JoinData, UserData, C2S_DrawLine } from './types'
 // key: socketId, value:userName
 
 class Handler {
   private websocketManager: WebsocketManager
   /**
-   * 全部玩家資料
+   * 全部使用者資料
    */
   private userList: UserData[] = []
   constructor(websocketManager: WebsocketManager) {
@@ -21,12 +21,12 @@ class Handler {
     this.websocketManager.sendUserList(allSocketIds, {
       userList: this.userList,
     })
-    console.log('玩家列表', this.userList)
+    console.log('使用者列表', this.userList)
   }
   public handleUserJoin(id: string, data: C2S_JoinData) {
     console.log(`join`, id, data.userName)
     if (this.checkSameName(data.userName)) {
-      //檢查是否有同名玩家
+      //檢查是否有同名使用者
       this.websocketManager.sendLogin(id, {
         isLogin: false,
         msg: '已有重複暱稱!',
@@ -88,7 +88,7 @@ class Handler {
   }
 
   /**
-   * 檢查是否有相同名稱玩家
+   * 檢查是否有相同名稱使用者
    */
   private checkSameName(userName: string) {
     return this.userList.find((user) => {

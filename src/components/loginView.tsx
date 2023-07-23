@@ -38,7 +38,7 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
     <div className="w-screen h-screen flex justify-center items-center flex-col">
       <div className="p-10 bg-white text-center rounded shadow-lg">
         <div className="font-Fredericka text-blue-800 text-6xl mb-10 border-b-2 border-blue-300 pb-5">
-          Draw & Guess
+          Draw & Chat
         </div>
         <form onSubmit={onFormSubmit}>
           <div className="mb-10">

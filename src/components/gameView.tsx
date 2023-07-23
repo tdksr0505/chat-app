@@ -50,7 +50,7 @@ const gameView: React.FC<gameViewProps> = () => {
           <div className="w-3/4 h-full pr-2 pb-2 ">
             <Canvas socket={socket} />
           </div>
-          {/* 玩家列表 */}
+          {/* 使用者列表 */}
           <div className="flex-auto h-full border-l-2 border-slate-500">
             <div className="text-center text-slate-500 font-bold">USERS</div>
             <div className="text-left pl-2 overflow-auto">
