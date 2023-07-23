@@ -5,7 +5,7 @@ import {
   C2S_JoinData,
   C2S_ChatData,
   C2S_DrawLine,
-  S2C_PlayerList,
+  S2C_UserList,
   S2C_ChatData,
   S2C_Login,
   S2C_NewRound,
@@ -61,9 +61,9 @@ class WebsocketManager {
     this.sendData(S2C_COMMAND.LOGIN, [socketId], data)
   }
 
-  public sendPlayerList(socketIds: string[], data: S2C_PlayerList) {
-    console.log('[S2C]PLAYER_LIST', data)
-    this.sendData(S2C_COMMAND.PLAYER_LIST, socketIds, data)
+  public sendUserList(socketIds: string[], data: S2C_UserList) {
+    console.log('[S2C]User_LIST', data)
+    this.sendData(S2C_COMMAND.USER_LIST, socketIds, data)
   }
 
   public sendMsg(socketIds: string[], data: S2C_ChatData) {
@@ -74,11 +74,6 @@ class WebsocketManager {
   public sendDrawLine(socketIds: string[], data: S2C_DrawLine) {
     console.log('[S2C]NEW_ROUND', data)
     this.sendData(S2C_COMMAND.DRAW, socketIds, data)
-  }
-
-  public sendNewRound(socketIds: string[], data: S2C_NewRound) {
-    console.log('[S2C]NEW_ROUND', data)
-    this.sendData(S2C_COMMAND.NEW_ROUND, socketIds, data)
   }
 
   private sendData(event: string, socketIds: string[], data: any) {

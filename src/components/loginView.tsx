@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../context/socketContext'
-import { PlayerListContext } from '../context/playerListContext'
+import { UserListContext } from '../context/userListContext'
 import { C2S_COMMAND, S2C_COMMAND } from '../constants'
 
 type loginViewProps = {
@@ -9,7 +9,7 @@ type loginViewProps = {
 }
 const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
   const socket = useContext(SocketContext)
-  const { setPlayerList } = useContext(PlayerListContext)
+  const { setUserList } = useContext(UserListContext)
   const [name, setName] = useState<string>('')
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
@@ -28,7 +28,7 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
     socket.on(S2C_COMMAND.LOGIN, (arg: LoginInfo) => {
       if (arg.isLogin) {
         setIsLogin(true)
-        arg.playerList && setPlayerList(arg.playerList)
+        arg.userList && setUserList(arg.userList)
       } else {
         alert(arg.msg)
       }

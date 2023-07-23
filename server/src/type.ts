@@ -1,4 +1,4 @@
-export type PlayerData = {
+export type UserData = {
   id: string
   userName: string
 }
@@ -11,8 +11,8 @@ type Point = {
 /**
  * S2C 玩家資料
  */
-export type S2C_PlayerList = {
-  playerList: PlayerData[]
+export type S2C_UserList = {
+  userList: UserData[]
 }
 
 /**
@@ -29,7 +29,7 @@ export type S2C_ChatData = {
  */
 export type S2C_Login = {
   isLogin: boolean
-  playerList?: PlayerData[]
+  userList?: UserData[]
   msg?: string
 }
 

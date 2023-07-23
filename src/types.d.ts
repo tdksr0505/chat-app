@@ -1,14 +1,11 @@
-/**
- * S2C 玩家資料
- */
-type PlayerData = {
+type UserData = {
   id: string
   userName: string
 }
 
 type LoginInfo = {
   isLogin: boolean
-  playerList?: PlayerData[]
+  userList?: UserData[]
   msg?: string
 }
 
@@ -38,16 +35,10 @@ type DrawLine = {
   currentPoint: Point
 }
 
-/**
- * S2C 玩家列表資料
- */
-type PlayerList = {
-  playerList: PlayerData[]
+type UserList = {
+  userList: UserData[]
 }
 
-/**
- * C2S 玩家加入資料
- */
 type JoinData = {
   userName: string
 }

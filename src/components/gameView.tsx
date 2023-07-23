@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import { SocketContext } from '../context/socketContext'
-import { PlayerListContext } from '../context/playerListContext'
+import { UserListContext } from '../context/userListContext'
 import { C2S_COMMAND, S2C_COMMAND } from '@/constants'
 import Canvas from './canvas'
 
@@ -13,22 +13,15 @@ const gameView: React.FC<gameViewProps> = () => {
   const [countDown, setCountDown] = useState<number>(0)
   const countDownTimer = useRef<NodeJS.Timer | null>(null)
   const socket = useContext(SocketContext)
-  const { playerList, setPlayerList } = useContext(PlayerListContext)
+  const { userList, setUserList } = useContext(UserListContext)
 
   const chatBoxRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    socket.on(S2C_COMMAND.PLAYER_LIST, (data: PlayerList) => {
-      setPlayerList(data.playerList)
+    socket.on(S2C_COMMAND.USER_LIST, (data: UserList) => {
+      setUserList(data.userList)
     })
     socket.on(S2C_COMMAND.SEND_MSG, (data: ChatData) => {
       setChatData((pre) => [...pre, data])
-    })
-    socket.on(S2C_COMMAND.NEW_ROUND, (data: NewRoundData) => {
-      console.log(`NEW_ROUND`, data)
-      setCountDown(data.countDown)
-      countDownTimer.current = setInterval(() => {
-        setCountDown((pre) => pre - 1)
-      }, 1000)
     })
   }, [])
 
@@ -72,16 +65,16 @@ const gameView: React.FC<gameViewProps> = () => {
           </div>
           {/* 玩家列表 */}
           <div className="flex-auto h-full border-l-2 border-slate-500">
-            <div className="text-center text-slate-500 font-bold">PLAYERS</div>
+            <div className="text-center text-slate-500 font-bold">USERS</div>
             <div className="text-left pl-2 overflow-auto">
-              {playerList.map((player) => {
+              {userList.map((user) => {
                 return (
                   <div
-                    key={player.id}
+                    key={user.id}
                     className="text-slate-500 py-1 border-b border-slate-400 last:border-0 flex items-center"
                   >
-                    <img src="/img/player.png" className="w-[30px]" />
-                    <div>{player.userName}</div>
+                    <img src="/img/user.png" className="w-[30px]" />
+                    <div>{user.userName}</div>
                   </div>
                 )
               })}
@@ -110,7 +103,7 @@ const gameView: React.FC<gameViewProps> = () => {
             onKeyDown={handleSendMsg}
             onChange={handleMsgChange}
             value={msg}
-            placeholder="輸入答案或對話"
+            placeholder="輸入對話"
             className="rounded outline-0 p-2 shadow-md border-2 border-blue-500 w-full mt-1"
           />
         </div>

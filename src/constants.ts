@@ -7,8 +7,7 @@ export const C2S_COMMAND = {
 export const S2C_COMMAND = {
   LOGIN: 'LOGIN',
   OTHER_JOIN: 'OTHER_JOIN',
-  PLAYER_LIST: 'PLAYER_LIST',
+  USER_LIST: 'USER_LIST',
   SEND_MSG: 'SEND_MSG',
   DRAW: 'DRAW',
-  NEW_ROUND: 'NEW_ROUND',
 }
