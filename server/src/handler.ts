@@ -1,5 +1,5 @@
 import WebsocketManager from './websocketManager'
-import { C2S_JoinData, PlayerData } from './type'
+import { C2S_JoinData, PlayerData, C2S_DrawLine } from './type'
 // key: socketId, value:userName
 
 const SECOND_PER_ROUND = 10 //一回合秒數
@@ -76,6 +76,10 @@ class Handler {
     }
   }
 
+  public handleDrawLine(id: string, data: C2S_DrawLine) {
+    let otherSocketIds = this.getOtherSocketIds(id)
+    this.websocketManager.sendDrawLine(otherSocketIds, data)
+  }
   private getAllSocketIds() {
     return this.playerList.map((player) => {
       return player.id

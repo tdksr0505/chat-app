@@ -3,6 +3,11 @@ export type PlayerData = {
   userName: string
 }
 
+type Point = {
+  x: number
+  y: number
+}
+
 /**
  * S2C 玩家資料
  */
@@ -29,6 +34,14 @@ export type S2C_Login = {
 }
 
 /**
+ * S2C 繪畫資料
+ */
+export type S2C_DrawLine = {
+  prevPoint: Point | null
+  currentPoint: Point
+}
+
+/**
  * S2C 新局資料
  */
 export type S2C_NewRound = {
@@ -48,4 +61,12 @@ export type C2S_ChatData = {
  */
 export type C2S_JoinData = {
   userName: string
+}
+
+/**
+ * C2S 聊天資料
+ */
+export type C2S_DrawLine = {
+  prevPoint: Point | null
+  currentPoint: Point
 }

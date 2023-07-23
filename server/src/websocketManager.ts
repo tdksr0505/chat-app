@@ -4,10 +4,12 @@ import Handler from './handler'
 import {
   C2S_JoinData,
   C2S_ChatData,
+  C2S_DrawLine,
   S2C_PlayerList,
   S2C_ChatData,
   S2C_Login,
   S2C_NewRound,
+  S2C_DrawLine,
 } from './type'
 
 const WSS_PORT = 3005
@@ -45,6 +47,12 @@ class WebsocketManager {
         console.log('[C2S]SEND_MSG', data)
         this.handler.handleSendMsg(socket.id, data.msg)
       })
+
+      // 繪畫
+      socket.on(C2S_COMMAND.DRAW, (data: C2S_DrawLine) => {
+        console.log('[C2S]SEND_MSG', data)
+        this.handler.handleDrawLine(socket.id, data)
+      })
     })
   }
 
@@ -61,6 +69,11 @@ class WebsocketManager {
   public sendMsg(socketIds: string[], data: S2C_ChatData) {
     console.log('[S2C]SEND_MSG', data)
     this.sendData(S2C_COMMAND.SEND_MSG, socketIds, data)
+  }
+
+  public sendDrawLine(socketIds: string[], data: S2C_DrawLine) {
+    console.log('[S2C]NEW_ROUND', data)
+    this.sendData(S2C_COMMAND.DRAW, socketIds, data)
   }
 
   public sendNewRound(socketIds: string[], data: S2C_NewRound) {
