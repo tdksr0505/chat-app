@@ -72,6 +72,12 @@ class Handler {
     let otherSocketIds = this.getOtherSocketIds(id)
     this.websocketManager.sendDrawLine(otherSocketIds, data)
   }
+
+  public handleClaer(id: string) {
+    let otherSocketIds = this.getOtherSocketIds(id)
+    this.websocketManager.sendClear(otherSocketIds)
+  }
+
   private getAllSocketIds() {
     return this.userList.map((user) => {
       return user.id

@@ -52,6 +52,12 @@ class WebsocketManager {
         console.log('[C2S]SEND_MSG', data)
         this.handler.handleDrawLine(socket.id, data)
       })
+
+      // 清除白板
+      socket.on(C2S_COMMAND.CLEAR, () => {
+        console.log('[C2S]CLEAR')
+        this.handler.handleClaer(socket.id)
+      })
     })
   }
 
@@ -75,7 +81,12 @@ class WebsocketManager {
     this.sendData(S2C_COMMAND.DRAW, socketIds, data)
   }
 
-  private sendData(event: string, socketIds: string[], data: any) {
+  public sendClear(socketIds: string[]) {
+    console.log('[S2C]CLEAR')
+    this.sendData(S2C_COMMAND.CLEAR, socketIds)
+  }
+
+  private sendData(event: string, socketIds: string[], data?: any) {
     console.log(`[S2C] ids:${socketIds} data:${data}`)
     socketIds.forEach((socketId) => {
       this.io.to(socketId).emit(event, data)

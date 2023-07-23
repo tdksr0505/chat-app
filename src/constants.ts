@@ -2,6 +2,7 @@ export const C2S_COMMAND = {
   USER_JOIN: 'USER_JOIN',
   SEND_MSG: 'SEND_MSG',
   DRAW: 'DRAW',
+  CLEAR: 'CLEAR',
 }
 
 export const S2C_COMMAND = {
@@ -10,4 +11,5 @@ export const S2C_COMMAND = {
   USER_LIST: 'USER_LIST',
   SEND_MSG: 'SEND_MSG',
   DRAW: 'DRAW',
+  CLEAR: 'CLEAR',
 }

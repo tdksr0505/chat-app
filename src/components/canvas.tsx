@@ -62,11 +62,15 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
     ctx.fill()
   }
 
-  const handleClear = () => {
+  const clearCanvas = () => {
     if (!canvasRef.current) return
     const ctx = canvasRef.current?.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+  }
+  const handleClear = () => {
+    clearCanvas()
+    socket.emit(C2S_COMMAND.CLEAR)
   }
 
   useEffect(() => {
@@ -78,6 +82,10 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
 
     socket.on(S2C_COMMAND.DRAW, (points: DrawLine) => {
       drawLine(points)
+    })
+
+    socket.on(S2C_COMMAND.CLEAR, () => {
+      clearCanvas()
     })
 
     return () => {
