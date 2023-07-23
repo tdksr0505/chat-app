@@ -5,9 +5,9 @@ import { UserListContext } from '../context/userListContext'
 import { C2S_COMMAND, S2C_COMMAND } from '@/constants'
 import Canvas from './canvas'
 
-type gameViewProps = {}
+type roomViewProps = {}
 
-const gameView: React.FC<gameViewProps> = () => {
+const roomView: React.FC<roomViewProps> = () => {
   const [chatData, setChatData] = useState<ChatData[]>([])
   const [msg, setMsg] = useState<string>('')
   const socket = useContext(SocketContext)
@@ -98,4 +98,4 @@ const gameView: React.FC<gameViewProps> = () => {
     </div>
   )
 }
-export default gameView
+export default roomView
