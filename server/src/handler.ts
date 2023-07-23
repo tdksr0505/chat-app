@@ -1,5 +1,5 @@
 import WebsocketManager from './websocketManager'
-import { C2S_JoinData, PlayerData, C2S_ChatData } from './type'
+import { C2S_JoinData, PlayerData } from './type'
 // key: socketId, value:userName
 
 const SECOND_PER_ROUND = 10 //一回合秒數
@@ -56,13 +56,12 @@ class Handler {
     console.log('玩家列表', this.playerList)
 
     //檢查是否可開始遊戲
-    // if (canStartGame()) {
-    //   startGame(socket)
-    // }
+    if (this.canStartGame()) {
+      this.startGame()
+    }
   }
 
   public handleSendMsg(id: string, msg: string) {
-    console.log(`handleSendMsg msg`, msg)
     let allSocketIds = this.getAllSocketIds()
     let userName = this.playerList.find((player) => {
       return player.id === id
@@ -97,6 +96,22 @@ class Handler {
   private checkSameName(userName: string) {
     return this.playerList.find((player) => {
       return player.userName === userName
+    })
+  }
+
+  /**
+   * 檢查是否可以開始遊戲
+   */
+  private canStartGame = () => {
+    return this.playerList.length >= MIN_PLAYER
+  }
+  private startGame = () => {
+    let painterId = this.playerList[0].id
+    let allSocketIds = this.getAllSocketIds()
+    this.websocketManager.sendNewRound(allSocketIds, {
+      countDown: SECOND_PER_ROUND,
+      painterId,
+      topic: '蘋果',
     })
   }
 }

@@ -19,8 +19,8 @@ type ChatData = {
 }
 
 type NewRoundData = {
-  counrDown: number
-  painter: string
+  countDown: number
+  painterId: string
   topic: string
 }
 

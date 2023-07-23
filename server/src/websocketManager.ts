@@ -7,6 +7,7 @@ import {
   S2C_PlayerList,
   S2C_ChatData,
   S2C_Login,
+  S2C_NewRound,
 } from './type'
 
 const WSS_PORT = 3005
@@ -48,16 +49,23 @@ class WebsocketManager {
   }
 
   public sendLogin(socketId: string, data: S2C_Login) {
+    console.log('[S2C]LOGIN', data)
     this.sendData(S2C_COMMAND.LOGIN, [socketId], data)
   }
 
   public sendPlayerList(socketIds: string[], data: S2C_PlayerList) {
+    console.log('[S2C]PLAYER_LIST', data)
     this.sendData(S2C_COMMAND.PLAYER_LIST, socketIds, data)
   }
 
   public sendMsg(socketIds: string[], data: S2C_ChatData) {
     console.log('[S2C]SEND_MSG', data)
     this.sendData(S2C_COMMAND.SEND_MSG, socketIds, data)
+  }
+
+  public sendNewRound(socketIds: string[], data: S2C_NewRound) {
+    console.log('[S2C]NEW_ROUND', data)
+    this.sendData(S2C_COMMAND.NEW_ROUND, socketIds, data)
   }
 
   private sendData(event: string, socketIds: string[], data: any) {
