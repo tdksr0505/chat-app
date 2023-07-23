@@ -3,7 +3,7 @@ import { SocketProvider } from '../context/socketContext'
 import { UserListProvider } from '../context/userListContext'
 import { DrawProvider } from '../context/drawContext'
 export const metadata = {
-  title: 'Draw & Guess',
+  title: 'Draw & Chat',
 }
 
 export default function RootLayout({
