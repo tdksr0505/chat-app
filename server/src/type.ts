@@ -39,6 +39,7 @@ export type S2C_Login = {
 export type S2C_DrawLine = {
   prevPoint: Point | null
   currentPoint: Point
+  color: string
 }
 
 /**
@@ -60,4 +61,5 @@ export type C2S_JoinData = {
 export type C2S_DrawLine = {
   prevPoint: Point | null
   currentPoint: Point
+  color: string
 }

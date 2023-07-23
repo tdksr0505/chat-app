@@ -4,6 +4,7 @@ import { SocketContext } from '../context/socketContext'
 import { UserListContext } from '../context/userListContext'
 import { C2S_COMMAND, S2C_COMMAND } from '@/constants'
 import Canvas from './canvas'
+import Palette from './palette'
 
 type roomViewProps = {}
 
@@ -42,7 +43,10 @@ const roomView: React.FC<roomViewProps> = () => {
     setMsg(e.target.value)
   }
   return (
-    <div className="w-screen h-screen flex justify-center items-center flex-col p-2">
+    <div className="w-screen h-screen flex flex-col justify-center items-center  p-2">
+      <div className="bg-white w-[700px] mb-3 p-3">
+        <Palette socket={socket} />
+      </div>
       <div className="p-4  text-center rounded shadow-lg h-[600px] w-[700px]  flex flex-col bg-white">
         {/* 上半部 */}
         <div className="relative h-2/3 flex flex-auto pb-1">

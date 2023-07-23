@@ -19,6 +19,10 @@ type CanvasProps = {
   socket: Socket
 }
 
+type PaletteProps = {
+  socket: Socket
+}
+
 type Point = {
   x: number
   y: number
@@ -27,6 +31,7 @@ type Point = {
 type DrawLine = {
   prevPoint: Point | null
   currentPoint: Point
+  color: string
 }
 
 type UserList = {

@@ -1,15 +1,14 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { C2S_COMMAND, S2C_COMMAND } from '../constants'
+import { DrawContext } from '../context/drawContext'
 
 const DEFAULT_WIDTH = 3
-const DEFAULT_COLOR = '#FF0000'
 const Canvas: React.FC<CanvasProps> = ({ socket }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const canvasBoxRef = useRef<HTMLDivElement>(null)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
-  const [lineColor, setLineColor] = useState<string>(DEFAULT_COLOR)
-  const [lineWidth, setLineWidth] = useState<number>(DEFAULT_WIDTH)
+  const { currentColor } = useContext(DrawContext)
   const prevPoint = useRef<null | Point>(null)
   const getCanvasPos = (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
@@ -36,29 +35,34 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!isMouseDown) return
     let currentPoint = getCanvasPos(event)
-    drawLine({ prevPoint: prevPoint.current, currentPoint })
+    drawLine({
+      prevPoint: prevPoint.current,
+      currentPoint,
+      color: currentColor,
+    })
     socket.emit(C2S_COMMAND.DRAW, {
       prevPoint: prevPoint.current,
       currentPoint,
+      color: currentColor,
     })
     prevPoint.current = { x: currentPoint.x, y: currentPoint.y }
   }
 
-  const drawLine = ({ prevPoint, currentPoint }: DrawLine) => {
+  const drawLine = ({ prevPoint, currentPoint, color }: DrawLine) => {
     let ctx = canvasRef.current?.getContext('2d')
     if (!ctx) return
     const { x: currentX, y: currentY } = currentPoint
     let startPoint = prevPoint ?? currentPoint
     ctx.beginPath()
-    ctx.lineWidth = lineWidth
-    ctx.strokeStyle = lineColor
+    ctx.lineWidth = DEFAULT_WIDTH
+    ctx.strokeStyle = color
     ctx.moveTo(startPoint.x, startPoint.y)
     ctx.lineTo(currentX, currentY)
     ctx.stroke()
 
-    ctx.fillStyle = lineColor
+    ctx.fillStyle = color
     ctx.beginPath()
-    ctx.arc(startPoint.x, startPoint.y, lineWidth / 2, 0, 2 * Math.PI)
+    ctx.arc(startPoint.x, startPoint.y, DEFAULT_WIDTH / 2, 0, 2 * Math.PI)
     ctx.fill()
   }
 

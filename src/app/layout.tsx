@@ -1,6 +1,7 @@
 import './globals.css'
 import { SocketProvider } from '../context/socketContext'
 import { UserListProvider } from '../context/userListContext'
+import { DrawProvider } from '../context/drawContext'
 export const metadata = {
   title: 'Draw & Guess',
 }
@@ -20,7 +21,9 @@ export default function RootLayout({
       </head>
       <body>
         <SocketProvider>
-          <UserListProvider>{children}</UserListProvider>
+          <UserListProvider>
+            <DrawProvider>{children}</DrawProvider>
+          </UserListProvider>
         </SocketProvider>
       </body>
     </html>
