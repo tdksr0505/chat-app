@@ -1,6 +1,5 @@
 import WebsocketManager from './websocketManager'
-import { C2S_JoinData, UserData, C2S_DrawLine } from './types'
-// key: socketId, value:userName
+import { C2S_JoinData, UserData, C2S_DrawLine } from './type'
 
 class Handler {
   private websocketManager: WebsocketManager
