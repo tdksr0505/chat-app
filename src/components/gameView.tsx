@@ -20,6 +20,9 @@ const gameView: React.FC<gameViewProps> = () => {
     socket.on(S2C_COMMAND.SEND_MSG, (arg: ChatData) => {
       setChatData((pre) => [...pre, arg])
     })
+    socket.on(S2C_COMMAND.NEW_ROUND, (arg: NewRoundData) => {
+      console.log(arg)
+    })
   }, [])
   const handleSendMsg = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {

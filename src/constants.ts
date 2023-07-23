@@ -10,4 +10,5 @@ export const S2C_COMMAND = {
   PLAYER_LIST: 'PLAYER_LIST',
   SEND_MSG: 'SEND_MSG',
   DRAW: 'DRAW',
+  NEW_ROUND: 'NEW_ROUND',
 }
