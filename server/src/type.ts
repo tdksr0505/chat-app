@@ -31,6 +31,7 @@ export type S2C_Login = {
   isLogin: boolean
   userList?: UserData[]
   msg?: string
+  drawRecord?: C2S_DrawLine[]
 }
 
 /**

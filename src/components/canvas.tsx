@@ -8,7 +8,7 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const canvasBoxRef = useRef<HTMLDivElement>(null)
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false)
-  const { currentColor } = useContext(DrawContext)
+  const { currentColor, drawRecord } = useContext(DrawContext)
   const prevPoint = useRef<null | Point>(null)
   const getCanvasPos = (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
@@ -77,11 +77,17 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
     socket.emit(C2S_COMMAND.CLEAR)
   }
 
+  const initDrawRecord = () => {
+    drawRecord.forEach((el) => {
+      drawLine(el)
+    })
+  }
   useEffect(() => {
     window.addEventListener('mouseup', handleMouseUp)
     if (canvasRef.current) {
       canvasRef.current.width = canvasBoxRef.current?.offsetWidth || 0
       canvasRef.current.height = canvasBoxRef.current?.offsetHeight || 0
+      initDrawRecord()
     }
 
     socket.on(S2C_COMMAND.DRAW, (points: DrawLine) => {

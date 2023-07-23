@@ -7,6 +7,7 @@ class Handler {
    * 全部使用者資料
    */
   private userList: UserData[] = []
+  private drawRecord: C2S_DrawLine[] = []
   constructor(websocketManager: WebsocketManager) {
     this.websocketManager = websocketManager
   }
@@ -15,7 +16,9 @@ class Handler {
     this.userList = this.userList.filter((user) => {
       return user.id !== id
     })
-
+    if (this.userList.length === 0) {
+      this.drawRecord = []
+    }
     let allSocketIds = this.getAllSocketIds()
     this.websocketManager.sendUserList(allSocketIds, {
       userList: this.userList,
@@ -42,6 +45,7 @@ class Handler {
     this.websocketManager.sendLogin(id, {
       isLogin: true,
       userList: this.userList,
+      drawRecord: this.drawRecord,
       msg: '登入成功',
     })
 
@@ -69,11 +73,13 @@ class Handler {
   }
 
   public handleDrawLine(id: string, data: C2S_DrawLine) {
+    this.drawRecord.push(data)
     let otherSocketIds = this.getOtherSocketIds(id)
     this.websocketManager.sendDrawLine(otherSocketIds, data)
   }
 
   public handleClaer(id: string) {
+    this.drawRecord = []
     let otherSocketIds = this.getOtherSocketIds(id)
     this.websocketManager.sendClear(otherSocketIds)
   }

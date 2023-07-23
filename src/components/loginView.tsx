@@ -2,6 +2,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { UserListContext } from '../context/userListContext'
+import { DrawContext } from '../context/drawContext'
 import { C2S_COMMAND, S2C_COMMAND } from '../constants'
 
 type loginViewProps = {
@@ -10,6 +11,7 @@ type loginViewProps = {
 const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
   const socket = useContext(SocketContext)
   const { setUserList } = useContext(UserListContext)
+  const { setDrawRecord } = useContext(DrawContext)
   const [name, setName] = useState<string>('')
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
@@ -25,12 +27,14 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
   }
 
   useEffect(() => {
-    socket.on(S2C_COMMAND.LOGIN, (arg: LoginInfo) => {
-      if (arg.isLogin) {
+    socket.on(S2C_COMMAND.LOGIN, (loginInfo: LoginInfo) => {
+      if (loginInfo.isLogin) {
+        console.log(`loginInfo`, loginInfo)
         setIsLogin(true)
-        arg.userList && setUserList(arg.userList)
+        loginInfo.userList && setUserList(loginInfo.userList)
+        loginInfo.drawRecord && setDrawRecord(loginInfo.drawRecord)
       } else {
-        alert(arg.msg)
+        alert(loginInfo.msg)
       }
     })
   }, [])

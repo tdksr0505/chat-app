@@ -7,6 +7,7 @@ type LoginInfo = {
   isLogin: boolean
   userList?: UserData[]
   msg?: string
+  drawRecord?: DrawLine[]
 }
 
 type ChatData = {
