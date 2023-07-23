@@ -2,7 +2,16 @@
 
 ## 簡介
 
-這是一個結合即時聊天通訊及共同繪畫功能的一個程式。
+這是一個結合即時聊天通訊及共同繪畫功能的程式，利用 Socket.io 來實作 websocket 功能。
+
+## demo
+
+## USE
+
+- Nextjs
+- TypeScript
+- Tailwind
+- Socket.io
 
 ## 啟動
 
