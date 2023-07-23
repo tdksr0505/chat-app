@@ -42,15 +42,6 @@ export type S2C_DrawLine = {
 }
 
 /**
- * S2C 新局資料
- */
-export type S2C_NewRound = {
-  countDown: number
-  painterId: string
-  topic: string
-}
-
-/**
  * C2S 聊天資料
  */
 export type C2S_ChatData = {

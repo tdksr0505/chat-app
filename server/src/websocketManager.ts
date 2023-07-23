@@ -8,7 +8,6 @@ import {
   S2C_UserList,
   S2C_ChatData,
   S2C_Login,
-  S2C_NewRound,
   S2C_DrawLine,
 } from './type'
 
@@ -36,7 +35,7 @@ class WebsocketManager {
         this.handler.handleDisconnect(socket.id)
       })
 
-      // 加入遊戲
+      // 加入
       socket.on(C2S_COMMAND.USER_JOIN, (data: C2S_JoinData) => {
         console.log('[C2S]USER_JOIN', data)
         this.handler.handleUserJoin(socket.id, data)
@@ -72,7 +71,7 @@ class WebsocketManager {
   }
 
   public sendDrawLine(socketIds: string[], data: S2C_DrawLine) {
-    console.log('[S2C]NEW_ROUND', data)
+    console.log('[S2C]DRAW', data)
     this.sendData(S2C_COMMAND.DRAW, socketIds, data)
   }
 

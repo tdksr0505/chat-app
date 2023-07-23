@@ -15,12 +15,6 @@ type ChatData = {
   timeStamp: number
 }
 
-type NewRoundData = {
-  countDown: number
-  painterId: string
-  topic: string
-}
-
 type CanvasProps = {
   socket: Socket
 }

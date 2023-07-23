@@ -10,8 +10,6 @@ type gameViewProps = {}
 const gameView: React.FC<gameViewProps> = () => {
   const [chatData, setChatData] = useState<ChatData[]>([])
   const [msg, setMsg] = useState<string>('')
-  const [countDown, setCountDown] = useState<number>(0)
-  const countDownTimer = useRef<NodeJS.Timer | null>(null)
   const socket = useContext(SocketContext)
   const { userList, setUserList } = useContext(UserListContext)
 
@@ -30,12 +28,6 @@ const gameView: React.FC<gameViewProps> = () => {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight
     }
   }, [chatData])
-
-  useEffect(() => {
-    if (countDown === 0 && countDownTimer.current) {
-      clearInterval(countDownTimer.current)
-    }
-  }, [countDown])
 
   const handleSendMsg = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -57,11 +49,6 @@ const gameView: React.FC<gameViewProps> = () => {
           {/* 畫布區 */}
           <div className="w-3/4 h-full pr-2 pb-2 ">
             <Canvas socket={socket} />
-            {countDown > 0 && (
-              <div className="absolute top-1 left-1 flex justify-center items-center w-10 h-10 bg-white border-2 border-amber-500 rounded-full select-none">
-                <div className="text-xl">{countDown}</div>
-              </div>
-            )}
           </div>
           {/* 玩家列表 */}
           <div className="flex-auto h-full border-l-2 border-slate-500">
