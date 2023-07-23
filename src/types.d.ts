@@ -9,6 +9,12 @@ type ChatData = {
   msg: string
 }
 
+type NewRoundData = {
+  counrDown: number
+  painter: string
+  topic: string
+}
+
 type CanvasProps = {
   socket: Socket
 }
