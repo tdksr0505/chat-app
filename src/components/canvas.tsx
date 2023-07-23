@@ -1,7 +1,6 @@
 'use client'
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { C2S_COMMAND, S2C_COMMAND } from '../constants'
-import { Socket } from 'socket.io-client'
 
 const DEFAULT_WIDTH = 3
 const DEFAULT_COLOR = '#FF0000'
@@ -63,6 +62,13 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
     ctx.fill()
   }
 
+  const handleClear = () => {
+    if (!canvasRef.current) return
+    const ctx = canvasRef.current?.getContext('2d')
+    if (!ctx) return
+    ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+  }
+
   useEffect(() => {
     window.addEventListener('mouseup', handleMouseUp)
     if (canvasRef.current) {
@@ -87,6 +93,12 @@ const Canvas: React.FC<CanvasProps> = ({ socket }) => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
       ></canvas>
+      <div
+        onClick={handleClear}
+        className="absolute top-3 left-3 flex justify-center items-center border-2 border-slate-600 rounded-full w-10 h-10 opacity-50 cursor-pointer hover:opacity-100"
+      >
+        <img src="/img/eraser.png" className="w-[22px] select-none" />
+      </div>
     </div>
   )
 }
