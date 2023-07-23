@@ -26,7 +26,6 @@ class Handler {
     console.log('使用者列表', this.userList)
   }
   public handleUserJoin(id: string, data: C2S_JoinData) {
-    console.log(`join`, id, data.userName)
     if (this.checkSameName(data.userName)) {
       //檢查是否有同名使用者
       this.websocketManager.sendLogin(id, {

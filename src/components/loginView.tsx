@@ -29,7 +29,6 @@ const loginView: React.FC<loginViewProps> = ({ setIsLogin }) => {
   useEffect(() => {
     socket.on(S2C_COMMAND.LOGIN, (loginInfo: LoginInfo) => {
       if (loginInfo.isLogin) {
-        console.log(`loginInfo`, loginInfo)
         setIsLogin(true)
         loginInfo.userList && setUserList(loginInfo.userList)
         loginInfo.drawRecord && setDrawRecord(loginInfo.drawRecord)
