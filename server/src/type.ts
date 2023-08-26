@@ -3,6 +3,22 @@ export type UserData = {
   userName: string
 }
 
+export const C2S_COMMAND = {
+  USER_JOIN: 'USER_JOIN',
+  SEND_MSG: 'SEND_MSG',
+  DRAW: 'DRAW',
+  CLEAR: 'CLEAR',
+}
+
+export const S2C_COMMAND = {
+  LOGIN: 'LOGIN',
+  OTHER_JOIN: 'OTHER_JOIN',
+  USER_LIST: 'USER_LIST',
+  SEND_MSG: 'SEND_MSG',
+  DRAW: 'DRAW',
+  CLEAR: 'CLEAR',
+}
+
 type Point = {
   x: number
   y: number

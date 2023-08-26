@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-import { C2S_COMMAND, S2C_COMMAND } from '../../src/constants' // 之後要改成import server的constants
+import { C2S_COMMAND, S2C_COMMAND } from './type'
 import Handler from './handler'
 import {
   C2S_JoinData,
